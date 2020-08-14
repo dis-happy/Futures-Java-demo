@@ -16,9 +16,10 @@ public class TransferApiServiceImpl implements TransferApiService {
     String secret_key = ""; // huobi申请的secretKey
     String url_prex = "https://api.huobi.pro";
 
-    public TransferApiServiceImpl(String api_key, String secret_key) {
+    public TransferApiServiceImpl(String api_key, String secret_key, String url_prex) {
         this.api_key = api_key;
         this.secret_key = secret_key;
+        this.url_prex = url_prex;
     }
 
 

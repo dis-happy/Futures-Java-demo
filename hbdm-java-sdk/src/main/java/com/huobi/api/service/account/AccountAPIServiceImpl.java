@@ -21,9 +21,10 @@ public class AccountAPIServiceImpl implements AccountAPIService {
     String url_prex = "https://api.hbdm.com";
 
 
-    public AccountAPIServiceImpl(String api_key, String secret_key) {
+    public AccountAPIServiceImpl(String api_key, String secret_key,String url_prex) {
         this.api_key = api_key;
         this.secret_key = secret_key;
+        this.url_prex = url_prex;
     }
 
 

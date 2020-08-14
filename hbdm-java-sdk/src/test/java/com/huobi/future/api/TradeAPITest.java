@@ -17,8 +17,11 @@ import java.util.List;
 @FixMethodOrder(MethodSorters.JVM)
 public class TradeAPITest implements BaseTest {
 
+    String url = "https://api.btcgateway.pro";
+    String api_key = "c972cb08-qv2d5ctgbn-f1650458-7b5b9";
+    String secret_key ="9ae3bc75-5396bf8d-5672406a-20567";
 
-    TradeAPIServiceImpl huobiAPIService = new TradeAPIServiceImpl("", "");
+    TradeAPIServiceImpl huobiAPIService = new TradeAPIServiceImpl(api_key, secret_key,url);
 
     @Test
     public void contractOrderRequest() {

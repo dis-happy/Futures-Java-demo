@@ -19,11 +19,20 @@ public class TradeAPIServiceImpl implements TradeAPIService {
     String api_key = ""; // huobi申请的apiKey
     String secret_key = ""; // huobi申请的secretKey
     String url_prex = "https://api.hbdm.com";
+    String path;
 
 
-    public TradeAPIServiceImpl(String api_key, String secret_key) {
+    public TradeAPIServiceImpl(String api_key, String secret_key, String url_prex) {
         this.api_key = api_key;
         this.secret_key = secret_key;
+        this.url_prex = url_prex;
+    }
+
+    public TradeAPIServiceImpl(String api_key, String secret_key, String url_prex, String path) {
+        this.api_key = api_key;
+        this.secret_key = secret_key;
+        this.url_prex = url_prex;
+        this.path = path;
     }
 
 
@@ -52,7 +61,10 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (request.getClientOrderId() != null) {
                 params.put("client_order_id", request.getClientOrderId());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_ORDER, params);
+            String orderPath = HuobiFutureAPIConstants.CONTRACT_ORDER;
+            if(StringUtils.isNotEmpty(path))
+                orderPath = path;
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + orderPath, params);
             ContractOrderResponse response = JSON.parseObject(body, ContractOrderResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
@@ -127,8 +139,16 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (request.getClientOrderId() != null) {
                 params.put("client_order_id", request.getClientOrderId());
             }
-            params.put("symbol", request.getSymbol().toUpperCase());
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_CANCEL, params);
+            if (request.getSymbol() != null) {
+                params.put("symbol", request.getSymbol().toUpperCase());
+            }
+            if (request.getContractCode() != null) {
+                params.put("contract_code", request.getContractCode().toUpperCase());
+            }
+            String orderPath = HuobiFutureAPIConstants.CONTRACT_CANCEL;
+            if(StringUtils.isNotEmpty(path))
+                orderPath = path;
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + orderPath, params);
             ContractCancelResponse response = JSON.parseObject(body, ContractCancelResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;

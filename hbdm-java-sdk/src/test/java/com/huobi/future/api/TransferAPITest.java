@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class TransferAPITest implements BaseTest {
 
 
-    TransferApiServiceImpl transferApiService = new TransferApiServiceImpl("", "");
+    TransferApiServiceImpl transferApiService = new TransferApiServiceImpl("", "","");
 
     @Test
     public void transfer() {

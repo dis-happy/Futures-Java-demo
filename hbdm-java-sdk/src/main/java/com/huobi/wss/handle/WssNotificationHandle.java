@@ -139,7 +139,8 @@ public class WssNotificationHandle {
 
             //组合签名map
             //Combined signature map
-            as.createSignature(accessKey, secretKey, "GET", "api.hbdm.com", "/notification", map);
+            String host = getHost(pushUrl);
+            as.createSignature(accessKey, secretKey, "GET", host, "/notification", map);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -149,6 +150,14 @@ public class WssNotificationHandle {
         logger.info("before send ");
         webSocketClient.send(req);
         logger.info("after send ");
+    }
+
+    private String getHost(String url){
+        if (StringUtils.isEmpty(url))
+            return null;
+        int startIndex = url.indexOf("wss://");
+        int endIndex = url.indexOf("/notification");
+        return url.substring(startIndex+6,endIndex);
     }
 
 

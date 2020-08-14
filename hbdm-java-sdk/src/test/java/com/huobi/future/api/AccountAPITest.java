@@ -12,7 +12,7 @@ import org.junit.runners.MethodSorters;
 public class AccountAPITest implements BaseTest {
 
 
-    AccountAPIServiceImpl huobiAPIService = new AccountAPIServiceImpl("", "");
+    AccountAPIServiceImpl huobiAPIService = new AccountAPIServiceImpl("", "","");
 
 
     @Test

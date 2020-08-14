@@ -11,13 +11,12 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.JVM)
 public class MarketAPITest implements BaseTest {
 
-    MarketAPIServiceImpl huobiAPIService = new MarketAPIServiceImpl();
-
-
+    String url_prex = "https://api.btcgateway.pro";
+    MarketAPIServiceImpl huobiAPIService = new MarketAPIServiceImpl(url_prex);
     @Test
     public void getContractContractInfo() {
         ContractContractCodeResponse result =
-                huobiAPIService.getContractContractInfo("", "", "");
+                huobiAPIService.getContractContractInfo("eth", "quarter", "");
         logger.debug("1.获取合约信息：{}", JSON.toJSONString(result));
     }
 
@@ -72,7 +71,7 @@ public class MarketAPITest implements BaseTest {
     @Test
     public void getMarketDetailMerged() {
         MarketDetailMergedResponse result =
-                huobiAPIService.getMarketDetailMerged("btc_cw");
+                huobiAPIService.getMarketDetailMerged("btc_cw","");
         logger.debug("8.获取聚合行情：{}", JSON.toJSONString(result));
     }
 

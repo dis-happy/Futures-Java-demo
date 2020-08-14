@@ -12,7 +12,7 @@
 
     <groupId>com.huobi.contract.api</groupId>
     <artifactId>huobi-contract-api</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.1-SNAPSHOT</version>
     
     <dependencies>
 
@@ -96,5 +96,16 @@
         </dependency>
 
     </dependencies>
+    <!-- maven配置项 -->
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <url>https://maven.ipaynow.cn/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>https://maven.ipaynow.cn/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

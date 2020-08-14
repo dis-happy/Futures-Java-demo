@@ -19,7 +19,7 @@ public interface MarketAPIService {
 
     MarketHistoryKlineResponse getMarketHistoryKline(String symbol, String period, Integer size);
 
-    MarketDetailMergedResponse getMarketDetailMerged(String symbol);
+    MarketDetailMergedResponse getMarketDetailMerged(String symbol, String contractCode);
 
     MarketTradeResponse getMarketTrade(String symbol);
 

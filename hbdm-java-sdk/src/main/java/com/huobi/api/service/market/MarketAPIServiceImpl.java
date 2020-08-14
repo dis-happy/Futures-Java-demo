@@ -15,6 +15,9 @@ public class MarketAPIServiceImpl implements MarketAPIService {
 
     String url_prex = "https://api.hbdm.com";
 
+    public MarketAPIServiceImpl(String url_prex) {
+        this.url_prex = url_prex;
+    }
 
     /**
      * @param symbol       "BTC","ETH"...
@@ -202,12 +205,15 @@ public class MarketAPIServiceImpl implements MarketAPIService {
     }
 
     @Override
-    public MarketDetailMergedResponse getMarketDetailMerged(String symbol) {
+    public MarketDetailMergedResponse getMarketDetailMerged(String symbol,String contractCode) {
         String body;
         try {
             Map<String, Object> params = new HashMap<>();
             if (StringUtils.isNotEmpty(symbol)) {
                 params.put("symbol", symbol.toUpperCase());
+            }
+            if (StringUtils.isNotEmpty(contractCode)) {
+                params.put("contract_code", contractCode.toUpperCase());
             }
             body = HbdmHttpClient.getInstance().doGet(url_prex + HuobiFutureAPIConstants.MARKET_DETAIL_MERGED, params);
             MarketDetailMergedResponse response = JSON.parseObject(body, MarketDetailMergedResponse.class);
