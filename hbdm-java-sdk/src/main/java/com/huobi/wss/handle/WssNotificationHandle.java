@@ -140,7 +140,8 @@ public class WssNotificationHandle {
             //组合签名map
             //Combined signature map
             String host = getHost(pushUrl);
-            as.createSignature(accessKey, secretKey, "GET", host, "/notification", map);
+            String path = getPath(pushUrl);
+            as.createSignature(accessKey, secretKey, "GET", host, path, map);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -159,6 +160,14 @@ public class WssNotificationHandle {
         url = url.substring(startIndex+6);
         int endIndex = url.indexOf("/");
         return url.substring(0,endIndex);
+    }
+    private String getPath(String url){
+        if (StringUtils.isEmpty(url))
+            return null;
+        int startIndex = url.indexOf("wss://");
+        url = url.substring(startIndex+6);
+        int endIndex = url.indexOf("/");
+        return url.substring(endIndex);
     }
 
 
