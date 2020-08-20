@@ -156,7 +156,9 @@ public class WssNotificationHandle {
         if (StringUtils.isEmpty(url))
             return null;
         int startIndex = url.indexOf("wss://");
-        return url.substring(startIndex+6);
+        url = url.substring(startIndex+6);
+        int endIndex = url.indexOf("/");
+        return url.substring(0,endIndex);
     }
 
 
