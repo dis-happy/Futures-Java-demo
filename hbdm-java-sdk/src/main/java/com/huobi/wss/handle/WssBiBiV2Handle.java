@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
+import javax.sound.midi.Soundbank;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
@@ -50,6 +51,7 @@ public class WssBiBiV2Handle {
 
 
     private void doConnect(List<String> channels, SubscriptionListener<String> callback) throws URISyntaxException {
+        System.out.println("连接开始 lastPingTime=" + lastPingTime);
         webSocketClient = new WebSocketClient(new URI(pushUrl)) {
 
             @Override
@@ -145,9 +147,8 @@ public class WssBiBiV2Handle {
             data.put("ts", ts);
             jsonMessage.put("data", data);
             logger.debug("发送pong:{}", ts);
-            System.out.println("------- pong " + jsonMessage.toString());
             webSocketClient.send(jsonMessage.toString());
-            lastPingTime = System.currentTimeMillis();
+            //lastPingTime = System.currentTimeMillis();
         } catch (Throwable t) {
             logger.error("dealPing出现了异常", t);
         }
@@ -207,7 +208,8 @@ public class WssBiBiV2Handle {
                         if ((webSocketClient.isClosed() && !webSocketClient.isClosing()) || System.currentTimeMillis() - lastPingTime > 20 * 1000) {
                             logger.error("isClosed:{},isClosing:{}，准备重连", webSocketClient.isClosed(), webSocketClient.isClosing());
                             System.out.println("重连.........." + (webSocketClient.isClosed() && !webSocketClient.isClosing()));
-                            System.out.println(System.currentTimeMillis() - lastPingTime > 10 * 1000);
+                            System.out.println(System.currentTimeMillis() - lastPingTime > 20 * 1000);
+                            System.out.println("重连时 lastPingTime=" + lastPingTime);
                             Boolean reconnectResult = webSocketClient.reconnectBlocking();
                             logger.error("重连的结果为：{}", reconnectResult);
                             if (!reconnectResult) {

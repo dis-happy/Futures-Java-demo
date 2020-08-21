@@ -57,6 +57,7 @@ public class HuobiFutureAPIConstants {
 
     //合约划转接口
     public static final String FUTURES_TRANSFER = "/v1/futures/transfer"; // 1.现货-合约账户间进行资金的划转
+    public static final String SPOTANDSWAP_TRANSFER = "/v2/account/transfer"; // 1.现货-永续账户间进行资金的划转
 
 
 }
