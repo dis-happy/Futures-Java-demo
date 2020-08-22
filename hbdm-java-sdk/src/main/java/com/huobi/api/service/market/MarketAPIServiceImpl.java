@@ -14,9 +14,15 @@ import java.util.Map;
 public class MarketAPIServiceImpl implements MarketAPIService {
 
     String url_prex = "https://api.hbdm.com";
+    String path = "";
 
     public MarketAPIServiceImpl(String url_prex) {
         this.url_prex = url_prex;
+    }
+
+    public MarketAPIServiceImpl(String url_prex, String path) {
+        this.url_prex = url_prex;
+        this.path = path;
     }
 
     /**
@@ -205,7 +211,7 @@ public class MarketAPIServiceImpl implements MarketAPIService {
     }
 
     @Override
-    public MarketDetailMergedResponse getMarketDetailMerged(String symbol,String contractCode) {
+    public MarketDetailMergedResponse getMarketDetailMerged(String symbol, String contractCode) {
         String body;
         try {
             Map<String, Object> params = new HashMap<>();
@@ -215,7 +221,10 @@ public class MarketAPIServiceImpl implements MarketAPIService {
             if (StringUtils.isNotEmpty(contractCode)) {
                 params.put("contract_code", contractCode.toUpperCase());
             }
-            body = HbdmHttpClient.getInstance().doGet(url_prex + HuobiFutureAPIConstants.MARKET_DETAIL_MERGED, params);
+            String path = HuobiFutureAPIConstants.MARKET_DETAIL_MERGED;
+            if(StringUtils.isNotEmpty(this.path))
+                path = this.path;
+            body = HbdmHttpClient.getInstance().doGet(url_prex + path, params);
             MarketDetailMergedResponse response = JSON.parseObject(body, MarketDetailMergedResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
