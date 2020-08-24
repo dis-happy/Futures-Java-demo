@@ -139,11 +139,10 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (request.getClientOrderId() != null) {
                 params.put("client_order_id", request.getClientOrderId());
             }
-            if (request.getSymbol() != null) {
-                params.put("symbol", request.getSymbol().toUpperCase());
-            }
             if (request.getContractCode() != null) {
                 params.put("contract_code", request.getContractCode().toUpperCase());
+            }else if (request.getSymbol() != null) {
+                params.put("symbol", request.getSymbol().toUpperCase());
             }
             String orderPath = HuobiFutureAPIConstants.CONTRACT_CANCEL;
             if(StringUtils.isNotEmpty(path))
