@@ -195,7 +195,9 @@ public class TradeAPIServiceImpl implements TradeAPIService {
         String body;
         try {
             Map<String, Object> params = new HashMap<>();
-            if (StringUtils.isNotEmpty(request.getSymbol())) {
+            if (request.getContractCode() != null) {
+                params.put("contract_code", request.getContractCode().toUpperCase());
+            }else if (request.getSymbol() != null) {
                 params.put("symbol", request.getSymbol().toUpperCase());
             }
             if (request.getClientOrderId() != null) {
@@ -204,7 +206,10 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (request.getOrderId() != null) {
                 params.put("order_id", request.getOrderId());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_ORDER_INFO, params);
+            String orderPath = HuobiFutureAPIConstants.CONTRACT_ORDER_INFO;
+            if(StringUtils.isNotEmpty(path))
+                orderPath = path;
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + orderPath, params);
             ContractOrderInfoResponse response = JSON.parseObject(body, ContractOrderInfoResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
