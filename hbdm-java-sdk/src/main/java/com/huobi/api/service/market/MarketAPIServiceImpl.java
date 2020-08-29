@@ -42,7 +42,7 @@ public class MarketAPIServiceImpl implements MarketAPIService {
             if (StringUtils.isNotEmpty(contractType)) {
                 params.put("contract_type", contractType);
             }
-            if (StringUtils.isNotEmpty(symbol)) {
+            if (StringUtils.isNotEmpty(contractCode)) {
                 params.put("contract_code", contractCode);
             }
             body = HbdmHttpClient.getInstance().doGet(url_prex + HuobiFutureAPIConstants.CONTRACT_CONTRACT_INFO, params);
@@ -222,7 +222,7 @@ public class MarketAPIServiceImpl implements MarketAPIService {
                 params.put("contract_code", contractCode.toUpperCase());
             }
             String path = HuobiFutureAPIConstants.MARKET_DETAIL_MERGED;
-            if(StringUtils.isNotEmpty(this.path))
+            if (StringUtils.isNotEmpty(this.path))
                 path = this.path;
             body = HbdmHttpClient.getInstance().doGet(url_prex + path, params);
             MarketDetailMergedResponse response = JSON.parseObject(body, MarketDetailMergedResponse.class);
