@@ -51,7 +51,6 @@ public class WssBiBiV2Handle {
 
 
     private void doConnect(List<String> channels, SubscriptionListener<String> callback) throws URISyntaxException {
-        System.out.println("连接开始 lastPingTime=" + lastPingTime);
         webSocketClient = new WebSocketClient(new URI(pushUrl)) {
 
             @Override
@@ -65,7 +64,6 @@ public class WssBiBiV2Handle {
             @Override
             public void onMessage(String s) {
                 logger.debug("onMessage:{}", s);
-                System.out.println("------onMessage String" + s);
                 executorService.execute(() -> {
                     try {
                         lastPingTime = System.currentTimeMillis();
@@ -133,7 +131,6 @@ public class WssBiBiV2Handle {
             JSONObject sub = new JSONObject();
             sub.put("action", "sub");
             sub.put("ch", e);
-            System.out.println(sub.toString());
             webSocketClient.send(sub.toString());
         });
     }
@@ -179,7 +176,6 @@ public class WssBiBiV2Handle {
         js.put("params", map);
         String req = JSON.toJSONString(map);
         logger.info("before send ");
-        System.out.println(js.toJSONString());
         try {
 
             webSocketClient.send(js.toJSONString());
@@ -207,9 +203,6 @@ public class WssBiBiV2Handle {
                     try {
                         if ((webSocketClient.isClosed() && !webSocketClient.isClosing()) || System.currentTimeMillis() - lastPingTime > 20 * 1000) {
                             logger.error("isClosed:{},isClosing:{}，准备重连", webSocketClient.isClosed(), webSocketClient.isClosing());
-                            System.out.println("重连.........." + (webSocketClient.isClosed() && !webSocketClient.isClosing()));
-                            System.out.println(System.currentTimeMillis() - lastPingTime > 20 * 1000);
-                            System.out.println("重连时 lastPingTime=" + lastPingTime);
                             Boolean reconnectResult = webSocketClient.reconnectBlocking();
                             logger.error("重连的结果为：{}", reconnectResult);
                             if (!reconnectResult) {
