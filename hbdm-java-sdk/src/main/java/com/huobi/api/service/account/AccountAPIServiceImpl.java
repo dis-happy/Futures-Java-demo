@@ -19,12 +19,20 @@ public class AccountAPIServiceImpl implements AccountAPIService {
     String api_key = ""; // huobi申请的apiKey
     String secret_key = ""; // huobi申请的secretKey
     String url_prex = "https://api.hbdm.com";
+    String path;
 
 
     public AccountAPIServiceImpl(String api_key, String secret_key,String url_prex) {
         this.api_key = api_key;
         this.secret_key = secret_key;
         this.url_prex = url_prex;
+    }
+
+    public AccountAPIServiceImpl(String api_key, String secret_key,String url_prex,String path) {
+        this.api_key = api_key;
+        this.secret_key = secret_key;
+        this.url_prex = url_prex;
+        this.path = path;
     }
 
 
@@ -36,7 +44,15 @@ public class AccountAPIServiceImpl implements AccountAPIService {
             if (StringUtils.isNotEmpty(symbol)) {
                 params.put("symbol", symbol.toUpperCase());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_ACCOUNT_INFO, params);
+            String accountPath = HuobiFutureAPIConstants.CONTRACT_ACCOUNT_INFO;
+            if(StringUtils.isNotEmpty(path)){
+                accountPath = path;
+                if (StringUtils.isNotEmpty(symbol)) {
+                    params.put("contract_code", symbol.toUpperCase());
+                }
+            }
+
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + accountPath, params);
             ContractAccountInfoResponse response = JSON.parseObject(body, ContractAccountInfoResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
