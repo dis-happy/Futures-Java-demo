@@ -463,4 +463,29 @@ public class MarketAPIServiceImpl implements MarketAPIService {
         }
         throw new ApiException(body);
     }
+
+    @Override
+    public SwapContractIndexResponse getSwapContractIndex(String symbol, String type) {
+
+        String body;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            if (StringUtils.isNotEmpty(symbol)) {
+                params.put("contract_code", symbol);
+            }
+            String path = HuobiFutureAPIConstants.SWAP_INDEX;
+            if ("usdt_swap".equalsIgnoreCase(type)) {
+                path = HuobiFutureAPIConstants.USDT_SWAP_INDEX;
+            }
+            body = HbdmHttpClient.getInstance().doGet(url_prex + path, params);
+            SwapContractIndexResponse response = JSON.parseObject(body, SwapContractIndexResponse.class);
+            if ("ok".equalsIgnoreCase(response.getStatus())) {
+                return response;
+            }
+
+        } catch (Exception e) {
+            body = e.getMessage();
+        }
+        throw new ApiException(body);
+    }
 }

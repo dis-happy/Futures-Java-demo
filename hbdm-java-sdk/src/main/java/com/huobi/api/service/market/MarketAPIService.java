@@ -42,4 +42,7 @@ public interface MarketAPIService {
     ContractLiquidationOrdersResponse getContractLiquidationOrders(String symbol, Integer tradeType, Integer createDate, Integer pageIndex, Integer pageSize);
 
     ContractApiStateResponse getContractApiState(String symbol);//查询系统状态
+
+    // 获取币本位永续合约和USDT本位合约的指数价格信息
+    SwapContractIndexResponse getSwapContractIndex(String symbol, String type);
 }
