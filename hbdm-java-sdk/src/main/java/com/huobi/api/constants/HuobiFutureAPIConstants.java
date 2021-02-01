@@ -25,7 +25,7 @@ public class HuobiFutureAPIConstants {
     public static final String CONTRACT_LIQUIDATION_ORDERS = "/api/v1/contract_liquidation_orders"; // 17.获取强平订单
     public static final String CONTRACT_API_STATE = "/api/v1/contract_api_state"; // 18.查询系统状态
 
-    public static final String SWAP_INDEX = "/api/v1/contract_index"; // 19.获取合约指数信息
+    public static final String SWAP_INDEX = "/swap-api/v1/swap_index"; // 19.获取币本位永续合约指数信息
     public static final String USDT_SWAP_INDEX = "/linear-swap-api/v1/swap_index"; // 20.获取USDT本位永续合约指数信息
 
 
