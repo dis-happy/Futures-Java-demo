@@ -216,7 +216,7 @@ public class MarketAPIServiceImpl implements MarketAPIService {
         try {
             Map<String, Object> params = new HashMap<>();
             if (StringUtils.isNotEmpty(symbol)) {
-                params.put("symbol", symbol.toUpperCase());
+                params.put("symbol", symbol);
             }
             if (StringUtils.isNotEmpty(contractCode)) {
                 params.put("contract_code", contractCode.toUpperCase());
