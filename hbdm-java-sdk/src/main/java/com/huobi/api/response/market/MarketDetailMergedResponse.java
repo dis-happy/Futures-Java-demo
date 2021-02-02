@@ -43,7 +43,7 @@ public class MarketDetailMergedResponse {
         private String close;
         private Integer count;
         private String high;
-        private Integer id;
+        private Long id;
         private String low;
         private String open;
         private Long ts;
