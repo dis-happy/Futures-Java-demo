@@ -12,6 +12,7 @@ import lombok.Data;
 @Builder
 public class ContractOrderDetailRequest {
     private String symbol;//"BTC","ETH"...
+    private String contractCode;
     private Long orderId;//订单id
     private Long createdAt;//下单时间戳
     private Integer orderType;//订单类型，1:报单 、 2:撤单 、 3:强平、4:交割

@@ -232,7 +232,12 @@ public class TradeAPIServiceImpl implements TradeAPIService {
         String body;
         try {
             Map<String, Object> params = new HashMap<>();
-            params.put("symbol", request.getSymbol().toUpperCase());
+
+            if (request.getContractCode() != null) {
+                params.put("contract_code", request.getContractCode().toUpperCase());
+            }else if (request.getSymbol() != null) {
+                params.put("symbol", request.getSymbol().toUpperCase());
+            }
             params.put("order_id", request.getOrderId());
             if (request.getCreatedAt() != null) {
                 params.put("created_at", request.getCreatedAt());
@@ -244,7 +249,10 @@ public class TradeAPIServiceImpl implements TradeAPIService {
             if (request.getPageSize() != null) {
                 params.put("page_size", request.getPageSize());
             }
-            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + HuobiFutureAPIConstants.CONTRACT_ORDER_DETAIL, params);
+            String orderPath = HuobiFutureAPIConstants.CONTRACT_ORDER_DETAIL;
+            if(StringUtils.isNotEmpty(path))
+                orderPath = path;
+            body = HbdmHttpClient.getInstance().doPost(api_key, secret_key, url_prex + orderPath, params);
             ContractOrderDetailResponse response = JSON.parseObject(body, ContractOrderDetailResponse.class);
             if ("ok".equalsIgnoreCase(response.getStatus())) {
                 return response;
