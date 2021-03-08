@@ -83,6 +83,8 @@ public class ContractOrderDetailResponse {
         private Integer totalSize;
         @SerializedName("current_page")
         private Integer currentPage;
+        @SerializedName("trade_volume")
+        private BigDecimal tradeVolume;
         private List<TradesBean> trades;
 
         @Data
